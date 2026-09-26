@@ -790,6 +790,189 @@
   let dadosPortal = null;
 
   // ---------------------------------------------------------------
+  // CORREÇÃO E NORMALIZAÇÃO DOS LINKS DO GOOGLE DRIVE
+  // Fonte de verdade: estrutura atual da pasta 04_CURSOS no Drive.
+  // Atualizado em 26/09/2026.
+  // ---------------------------------------------------------------
+
+  const LINKS_CURSOS_CORRIGIDOS = {
+    desenvolvimento_web: {
+      1: {
+        pastaGeral: 'https://drive.google.com/drive/folders/1KPDVnjb_Ez-FFwq2BHt4eMx4wn5O3ADB',
+        listasPresenca: 'https://drive.google.com/drive/folders/1JKVhmyxZqcKuKJWbatzZwVyA4VQUPES6',
+        fotos: 'https://drive.google.com/drive/folders/10i3MAcfmotBaF0QRAIsTbh1Y4Gk0-6Zc',
+        planoAula: 'https://drive.google.com/drive/folders/1M6R2Ri2iC-gQKqrY16VYXWvNJrlynjqC',
+        apostila: 'https://drive.google.com/drive/folders/10oNwmVJq64H8Ghd_hYucHVp4J-zTUO2I',
+        certificados: 'https://drive.google.com/drive/folders/1tyZnrvsaAvruHVY98TEeFxo529DuZc-B',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/1zOE-DGl_-orHuxQHzmVD7NGwnGV7Vv2M'
+      },
+      2: {
+        pastaGeral: 'https://drive.google.com/drive/folders/1fmYtIUDlVv3LXca3XhFfZNpMeI-Kj3oE',
+        listasPresenca: 'https://drive.google.com/drive/folders/1Y52-nlyzL9yp0UNsDKhSoOZYgGCSFcAl',
+        fotos: 'https://drive.google.com/drive/folders/1lMs-pA5RhYMeSr8ueXBauVDL1lFPB-2C',
+        planoAula: 'https://drive.google.com/drive/folders/14ObFzwv5hv7z1617ftUGBqnEDoJgEUe7',
+        apostila: 'https://drive.google.com/drive/folders/1PxSIFjN6gInqk6B2d-UhfNHIaStEpHMV',
+        certificados: 'https://drive.google.com/drive/folders/1uJeQML7pQgkHxtFfbbzC4GRE-J4abOlU',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/13SAzYFwZRlD87eRtH5EQ3b7GLsISz0_r'
+      }
+    },
+    pesquisa_mercado: {
+      1: {
+        pastaGeral: 'https://drive.google.com/drive/folders/13DxQboEYslrN-is27AL1jtbAuQ1rh6kw',
+        listasPresenca: 'https://drive.google.com/drive/folders/1ZryKzsbbDrPi4r-Cj1WY00c-g2mtxwGY',
+        fotos: 'https://drive.google.com/drive/folders/1X8XR3RwomsJe983rPfuHtxFcb0uvKpwl',
+        planoAula: 'https://drive.google.com/drive/folders/1dvwBg8zs5UhyTcSGMOwTGJdgmFle7hFn',
+        apostila: 'https://drive.google.com/drive/folders/15e7SLUlCpjmj7fSOIFT6VJNRYkw1jVgr',
+        certificados: 'https://drive.google.com/drive/folders/1iydBa6zjoBfqeNyS3_vJd130YFM7jVA2',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/1SUHsM3C2r96qsLOVfZsB5SXkvTG-pxyG'
+      },
+      2: {
+        pastaGeral: 'https://drive.google.com/drive/folders/1O0V44gbuQEs9TyWqHZXdVsJ2KqM8ESPg',
+        listasPresenca: 'https://drive.google.com/drive/folders/140N5ealkjJQC0o8OsPd09iXD9q7AVotw',
+        fotos: 'https://drive.google.com/drive/folders/105CrYH5uxfUiZazh7qdRHBAf3AiGJOdt',
+        planoAula: 'https://drive.google.com/drive/folders/1Z5g7qSrRchbs_5WJ41qfiKlJKO-g9T4O',
+        apostila: 'https://drive.google.com/drive/folders/1k-t-L5_vMj6OSKinU-3EmKxwLVKSNkk5',
+        certificados: 'https://drive.google.com/drive/folders/12q8_XayTuWfG38LDeTvEX9iKNdRfibTI',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/14_o9oixPczYoMiRv_T0ygwH990Zm8InO'
+      }
+    },
+    fotografia_comercial: {
+      1: {
+        pastaGeral: 'https://drive.google.com/drive/folders/1mpuetNeb7sI7JPYX8CXN8qDmED82ITiz',
+        listasPresenca: 'https://drive.google.com/drive/folders/1rLb4yCNMgIk2-2cZHVZLcVhGIUbsed6S',
+        fotos: 'https://drive.google.com/drive/folders/19Z_TsGVJcROqNLCLZNm_8gWhsKFEUJ33',
+        planoAula: 'https://drive.google.com/drive/folders/1qanRZdnJOvwcP7sZaTJ-rkFxWAkWmllY',
+        apostila: 'https://drive.google.com/drive/folders/1FOBem6ykk3BWjIkecQtuRU1nlE1DzEz3',
+        certificados: 'https://drive.google.com/drive/folders/1KkWJuaFCYMQtHnjqTnwpzCn2CGMgVsoP',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/12j1Fv8GMtdhsWll8NXaOt-NxkFj4baz9'
+      },
+      2: {
+        pastaGeral: 'https://drive.google.com/drive/folders/1JvUgZv8vUOdOzM6gm9sE-HTcwlgW0W64',
+        listasPresenca: 'https://drive.google.com/drive/folders/1GZ4z6rmN6mr5QQzgF942EusjD3Kl9McK',
+        fotos: 'https://drive.google.com/drive/folders/1nv7lyGmpgqHF1YKQ3IZCBKgwjlHjIqxs',
+        planoAula: 'https://drive.google.com/drive/folders/1AoqptrW7u9J6HbkyNerZy3ZQJ12dZjEc',
+        apostila: 'https://drive.google.com/drive/folders/1RYCHXnmjV1YoPqnStaBwK-xMP7jDjSOn',
+        certificados: 'https://drive.google.com/drive/folders/1D3P7TZayBGpfstlSps_W_-W6uNuS3lZV',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/1wlZpQ3TiHEygNRYtqesJPXbT-K0YUOq2'
+      }
+    },
+    criacao_conteudo_digital: {
+      1: {
+        pastaGeral: 'https://drive.google.com/drive/folders/14dkfTKFRRI9zoCyXSCt3crpCfu70G8Xy',
+        listasPresenca: 'https://drive.google.com/drive/folders/1xlMOKUCK1i4vU9lFaYevtZAQnU22wxg5',
+        fotos: 'https://drive.google.com/drive/folders/1841A1XK-JVDgQDCihCxBlQiIR_e60lZe',
+        planoAula: 'https://drive.google.com/drive/folders/1AmsqInLM5t8138ZV7OK6dmrexP3aNdJi',
+        apostila: 'https://drive.google.com/drive/folders/1UEn6YI6w5LZHwj5y3eR_uES4xDTFAGXL',
+        certificados: 'https://drive.google.com/drive/folders/1r9KSrU-E08fqmGWFtBHhfxM0TRxVcnjp',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/1bWxEcw6ZPLDMVq7wiM-9qSI3untCxRuE'
+      },
+      2: {
+        pastaGeral: 'https://drive.google.com/drive/folders/1te1P1c69kJd0dTG7Kyj8YstyHCiMiLJj',
+        listasPresenca: 'https://drive.google.com/drive/folders/10qM50MC5nSAMtVk39e1ovFSK5t93GkIE',
+        fotos: 'https://drive.google.com/drive/folders/1efs0xtoQsfiM5_p6tLkl_ljWcJD0CClc',
+        planoAula: 'https://drive.google.com/drive/folders/1-ugQaADZ_WeVvYJDOVvji8KCpQkSm-oU',
+        apostila: 'https://drive.google.com/drive/folders/10LXew_PBfieNaFTaM9zABorsFP_3Cbj1',
+        certificados: 'https://drive.google.com/drive/folders/1RG2hhnzrY3PfiE_w0160kx-7b8bxPkCo',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/1jgkOUWHGOXKBgrAtPwwr5-RKrFvvTN4H'
+      }
+    },
+    midias_sociais: {
+      1: {
+        pastaGeral: 'https://drive.google.com/drive/folders/1Zkl8SqvRzJW-aIV7vjui_BNmaCS908AJ',
+        listasPresenca: 'https://drive.google.com/drive/folders/16L1wSa3A03ti89DWaurXGp-RRP3oiZtP',
+        fotos: 'https://drive.google.com/drive/folders/1LrI0tP14DKd0GF-J3g2s_dd66pllXYfX',
+        planoAula: 'https://drive.google.com/drive/folders/1E3YmhZtJ5E6bSQ8Fusq3NyYbqmV4Ltyy',
+        apostila: 'https://drive.google.com/drive/folders/1IdZGYfGnZUwURiQCmjQiVlFfooqMdxBu',
+        certificados: 'https://drive.google.com/drive/folders/1R9JuoWQncufwwndKNHxiEaKYg5eKAH1M',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/1HvHHQruJrL_8aX6hu79iuplMfrQNv8NF'
+      },
+      2: {
+        pastaGeral: 'https://drive.google.com/drive/folders/1p6oYbhrCVz3h5Liy07x7Fl3FlsQdaoke',
+        listasPresenca: 'https://drive.google.com/drive/folders/1m9sxtIQPtwkyn40QS-xe9kf51abwQuL4',
+        fotos: 'https://drive.google.com/drive/folders/1AZye4shFNpAapMv8gkjvSRIFGUWTeET-',
+        planoAula: 'https://drive.google.com/drive/folders/1kLzLxyvQbjmz0vnM2Quij6lYpDYWQgb7',
+        apostila: 'https://drive.google.com/drive/folders/1TGBj31_YfFY_ghBNev9zo79XGA7O4P_S',
+        certificados: 'https://drive.google.com/drive/folders/1D7pskqCJAOqaPjDbenTNaP5T7-9Ka1OR',
+        relatorioInstrutor: 'https://drive.google.com/drive/folders/1hqGYlTIKQmYL11PakCAk8IG9Z6VSiBkU'
+      }
+    }
+  };
+
+  function normalizarTextoChave(texto) {
+    return String(texto || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  }
+
+  function identificarCursoChave(nomeCurso) {
+    const nome = normalizarTextoChave(nomeCurso);
+    if (nome.includes('desenvolvimento') && nome.includes('web')) return 'desenvolvimento_web';
+    if (nome.includes('pesquisa') && nome.includes('mercado')) return 'pesquisa_mercado';
+    if (nome.includes('fotografia')) return 'fotografia_comercial';
+    if (nome.includes('criacao') && nome.includes('conteudo')) return 'criacao_conteudo_digital';
+    if (nome.includes('midias') && nome.includes('sociais')) return 'midias_sociais';
+    return '';
+  }
+
+  function numeroDaTurma(rotuloTurma) {
+    const achou = String(rotuloTurma || '').match(/(\d+)/);
+    return achou ? Number(achou[1]) : null;
+  }
+
+  function normalizarLinkDrive(link) {
+    let valor = String(link || '').trim();
+    if (!valor) return '';
+
+    // Remove aspas acidentais vindas de planilha/JSON.
+    valor = valor.replace(/^["']+|["']+$/g, '').trim();
+
+    // URL completa: mantém.
+    if (/^https?:\/\//i.test(valor)) return valor;
+
+    // URL sem protocolo.
+    if (/^(?:www\.)?(?:drive|docs)\.google\.com\//i.test(valor)) {
+      return 'https://' + valor.replace(/^www\./i, '');
+    }
+
+    // ID puro do Google Drive: usa /open?id=, que funciona para arquivo ou pasta.
+    if (/^[A-Za-z0-9_-]{20,}$/.test(valor)) {
+      return 'https://drive.google.com/open?id=' + encodeURIComponent(valor);
+    }
+
+    // Conteúdo não reconhecido não vira href quebrado.
+    return '';
+  }
+
+  function aplicarLinksCorrigidos(dados) {
+    if (!dados || !Array.isArray(dados.cursos)) return dados;
+
+    dados.cursos.forEach(function (curso) {
+      const chave = identificarCursoChave(curso.nomeCurso);
+      if (!chave || !LINKS_CURSOS_CORRIGIDOS[chave] || !Array.isArray(curso.turmas)) return;
+
+      curso.turmas.forEach(function (turma) {
+        const numero = numeroDaTurma(turma.turma);
+        const links = LINKS_CURSOS_CORRIGIDOS[chave][numero];
+        if (!links) return;
+
+        turma.linkPastaGeral = links.pastaGeral;
+        turma.linkListasPresenca = links.listasPresenca;
+        turma.linkFotos = links.fotos;
+        turma.linkPlanoAula = links.planoAula;
+        turma.linkApostila = links.apostila;
+        turma.linkCertificados = links.certificados;
+        turma.linkRelatorioInstrutor = links.relatorioInstrutor;
+      });
+    });
+
+    return dados;
+  }
+
+
+  // ---------------------------------------------------------------
   // AUTENTICAÇÃO
   // ---------------------------------------------------------------
 
@@ -851,6 +1034,7 @@
       .then(function (resposta) { return resposta.json(); })
       .then(function (dados) {
         if (dados.erro) { throw new Error(dados.erro); }
+        aplicarLinksCorrigidos(dados);
         dadosPortal = dados;
         renderizarDashboard(dados);
         renderizarMetas(dados);
@@ -883,7 +1067,7 @@
   }
 
   function linkDriveHtml(link) {
-    const url = (link || '').trim();
+    const url = normalizarLinkDrive(link);
     if (!url) {
       return '<span class="link-drive desabilitado">' + ICONE_EXTERNO + ' Sem link ainda</span>';
     }
@@ -1028,6 +1212,7 @@
           '<div>Frequência min.: <strong>' + escaparHtml(String(t.frequenciaMinima || '')) + '</strong></div>' +
         '</div>' +
         '<div class="lista-links-turma">' +
+          linhaLinkTurma('Pasta geral da turma', t.linkPastaGeral) +
           linhaLinkTurma('Listas de presença', t.linkListasPresenca) +
           linhaLinkTurma('Fotos das aulas', t.linkFotos) +
           linhaLinkTurma('Plano de aula', t.linkPlanoAula) +
@@ -1051,7 +1236,7 @@
   }
 
   function linhaLinkTurma(rotulo, link) {
-    const url = (link || '').trim();
+    const url = normalizarLinkDrive(link);
     if (!url) {
       return '<span class="link-drive desabilitado">' + ICONE_EXTERNO + ' ' + escaparHtml(rotulo) + '</span>';
     }
